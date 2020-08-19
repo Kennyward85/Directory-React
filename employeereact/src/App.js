@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Search from "./components/Search/search";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from "./components/container/container";
 import TableSet from "./components/Table/table";
 
 
-class App extends Component {
+class App extends React.Component {
   state = {
     users:[],
     search:'',
@@ -26,9 +26,7 @@ componentDidMount() {
   searchResults = (dynamicSearch) => {
     this.setState({ search : dynamicSearch });
   }
-  initSearch = () => {
-      this.setState({users : [...this.state.search]})
-      }
+ 
     
 
   sortArray = (objects, order, direction) => {
