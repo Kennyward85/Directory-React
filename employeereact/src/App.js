@@ -1,50 +1,50 @@
-import React from 'react';
-import React, {useEffect} from 'react';
+import React, { Component } from 'react';
+import Search from "./components/Search/search";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import EmpTable from "./components/table/table";
+import Container from "./components/container/container";
+import TableSet from "./components/Table/table";
 
-class App extends React.Component {
-  constructor(props) {
-  super(props)
-  this.state ={
-  search: '',
-  users:[]
-}
-}
 
+class App extends Component {
+  state = {
+    users:[],
+    search:'',
+  }
+
+ users;
+
+
+
+// Loading Data from remote endpoint 
 componentDidMount() {
-  axios.get(`https://randomuser.me/api/?results=20&nat=us`)
-      .then(res => {  
-        let users = (res && res.data) ? res.data.results: [];
-        const tableList = users.map(state => new User(state));
-        this.setState({ allUsers: tableList, users: tableList });
+  fetch(`https://randomuser.me/api/?results=20&nat=us`)
+      .then(res => res.json())
+      .then(data => this.setState({ users : data.results}));
+        
+  }
 
-    })
-}
-}
+  searchResults = (dynamicSearch) => {
+    this.setState({ search : dynamicSearch });
+  }
+  initSearch = () => {
+      this.setState({users : [...this.state.search]})
+      }
+    
 
-
-
- App() {
-  useEffect(() => {
-
-  })
+  sortArray = (objects, order, direction) => {
+    let signal = direction === "asc" ? 1 : -1
+    objects.sort((a,b) => (a[order] > b[order]) ? signal * 1 : ((b[order] > a[order]) ? signal * -1 : 0));
+    }
+  
+   
+ render() {
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        <Search searchResults={this.searchResults}/>
+        <TableSet/>
+      </Container>
     </div>
   );
 }

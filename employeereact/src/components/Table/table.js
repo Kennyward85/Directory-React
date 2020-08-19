@@ -1,39 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/table';
 
-
-
-    const EmpTable = (props) => {
-    const { users } = props;
+   
+   const TableSet =()=> {
     
-    return (
-
+    
+  
+    
+            return (
+        // Sorting Array in ascending or Descending order on click for all headers but phone number
+        // Using sortArray 
         <Table striped bordered hover variant='dark'>
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>City</th>
-                    <th>Street</th>
-                    <th>State</th>
-                    <th>Phone</th>
+                    <th className= 'Sort' onClick={() => this.sortArray(this.firstName)}>First Name</th>
+                    <th className= 'Sort' onClick={() => this.sortArray(this.LastName)}>Last Name</th>
+                    <th className= 'Sort' onClick={() => this.sortArray(this.email)}>Email</th>
+                    <th className= 'Sort' onClick={() => this.sortArray(this.city)}>City</th>
+                    <th className= 'Sort' onClick={() => this.sortArray(this.street)}>Street</th>
+                    <th className= 'Sort' onClick={() => this.sortArray(this.state)}>State</th>
+                    <th >Phone</th>
                 </tr>
             </thead>
             <tbody>
-                {users.map( state => new User(state) (  
+            {user.map(user => (  
                <tr>
-                   <td>{firstName}</td>
-                   <td>{lastName}</td>
-                   <td>{email}</td>
-                   <td>{city}</td>
-                   <td>{street}</td>
-                   <td>{state}</td>
-                   <td>{phone}</td>
+                   <td>{user.name.first}</td>
+                   <td>{user.name.last}</td>
+                   <td>{user.email}</td>
+                   <td>{user.location.city}</td>
+                   <td>{user.email.login}</td>
+                   <td>{user.location.state}</td>
+                   <td>{user.phone}</td>
                </tr>))}
             </tbody>
         </Table>
     )
 }
 
-export default EmpTable;
+export default TableSet;
