@@ -1,50 +1,63 @@
 import React from 'react';
-import Search from "./components/Search/search";
+import axios from 'axios';
+import SearchTable from "./components/Search/search";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from "./components/container/container";
-import TableSet from "./components/Table/table";
+import Container from 'react-bootstrap/container';
+import TableSet from "./components/Table/TableSet";
 
 
 class App extends React.Component {
   state = {
     users:[],
-    search:'',
+   search:'',
+   direction: 'asc',
+  
   }
 
- users;
+
 
 
 
 // Loading Data from remote endpoint 
-componentDidMount() {
-  fetch(`https://randomuser.me/api/?results=20&nat=us`)
-      .then(res => res.json())
-      .then(data => this.setState({ users : data.results}));
-        
+componentDidMount = () => {
+  axios.get(`https://randomuser.me/api/?results=20&nat=us`)
+      .then(data => {
+        console.log(data.data.results);
+        this.setState({ users : data.data.results})
+      })
+      .catch(err => console.log(err));   
   }
 
-  searchResults = (dynamicSearch) => {
-    this.setState({ search : dynamicSearch });
-  }
- 
+  
+  searchFilter = (value) => {
+    this.setState({ search : value });
+    this.search.filter(this.users.toLowerCase().includes(this.value))
+        };
+
+     
     
 
-  sortArray = (objects, order, direction) => {
-    let signal = direction === "asc" ? 1 : -1
-    objects.sort((a,b) => (a[order] > b[order]) ? signal * 1 : ((b[order] > a[order]) ? signal * -1 : 0));
-    }
+  sortArray = (direction, order, users) => {
+      console.log("sorting");
+      const signal = direction === "asc" ? 1 : -1;
+      if(direction === 'asc') { 
+        users.sort((a,b) => (a[order] > b[order]) ? signal * 1 : ((b[order] > a[order]) ? signal * -1 : 0));
+        console.log("sorted");
+      }
+        }
   
-   
- render() {
+ render () {
  
   return (
     <div className="App">
+      
       <Container>
-        <Search searchResults={this.searchResults}/>
-        <TableSet/>
+        <SearchTable search={this.searchFilter}  />
+        <TableSet users={this.state.users} sort={this.sortArray}/>
       </Container>
     </div>
   );
+  }
 }
-}
+
 export default App;
