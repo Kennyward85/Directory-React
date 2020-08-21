@@ -9,15 +9,11 @@ import TableSet from "./components/Table/TableSet";
 class App extends React.Component {
   state = {
     users:[],
-   search:'',
-   direction: 'asc',
-  
+    direction: "ascend",
+    searchTerm: '',
   }
 
-
-
-
-
+ 
 // Loading Data from remote endpoint 
 componentDidMount = () => {
   axios.get(`https://randomuser.me/api/?results=20&nat=us`)
@@ -26,35 +22,53 @@ componentDidMount = () => {
         this.setState({ users : data.data.results})
       })
       .catch(err => console.log(err));   
-  }
-
+  } 
   
-  searchFilter = (value) => {
-    this.setState({ search : value });
-    this.search.filter(this.users.toLowerCase().includes(this.value))
-        };
-
-     
-    
-
-  sortArray = (direction, order, users) => {
-      console.log("sorting");
-      const signal = direction === "asc" ? 1 : -1;
-      if(direction === 'asc') { 
-        users.sort((a,b) => (a[order] > b[order]) ? signal * 1 : ((b[order] > a[order]) ? signal * -1 : 0));
-        console.log("sorted");
+  onInputChange = (event) => {
+    event.preventDefault();
+    let newInput = event.target.value;
+    this.setState({searchTerm : newInput})
+  }
+  
+  onSearchSubmit = (event) => {
+    event.preventDefault();
+    let userInput = this.state.searchTerm.toLowerCase();
+    console.log(this.state.searchTerm);
+   
+    let searchResults = [];
+    for(let i = 0; i < this.state.users.length; i++) {
+      if(this.state.users[i].name.first.toLowerCase() === userInput ||  this.state.users[i].name.last.toLowerCase() === userInput) {
+        searchResults.push(this.state.users[i])
       }
-        }
+    }
+    this.setState({users: searchResults})
+  }
+       
+  sortArray = (event) => {
+    console.log(event.target.className);
+    let field = event.target.className
+    let ascend;
+    if (field === 'last' || field === 'first') {
+      ascend = this.state.users.sort((a,b) => (a.name[field] > b.name[field]) ?  1 : ((b.name[field] > a.name[field]) ?  -1 : 0));
+    } else if (field === 'city' || field === 'state') {
+      ascend = this.state.users.sort((a,b) => (a.location[field] > b.location[field]) ?  1 : ((b.location[field] > a.location[field]) ?  -1 : 0));
+    } else if(field === 'username') {
+      ascend = this.state.users.sort((a,b) => (a.login[field] > b.login[field]) ?  1 : ((b.login[field] > a.login[field]) ?  -1 : 0));
+    } else {
+     ascend = this.state.users.sort((a,b) => (a[field] > b[field]) ?  1 : ((b[field] > a[field]) ?  -1 : 0));
+    }
+    this.setState({users: ascend})
+  }   
   
  render () {
  
   return (
     <div className="App">
-      
+      <br/><br/><br/><br/>
       <Container>
-        <SearchTable search={this.searchFilter}  />
+        <SearchTable submit={this.onSearchSubmit} change={this.onInputChange} searchTerm={this.state.searchTerm}/>
         <TableSet users={this.state.users} sort={this.sortArray}/>
-      </Container>
+      </Container> 
     </div>
   );
   }

@@ -12,12 +12,12 @@ const TableSet = (props) => {
         <Table striped bordered hover variant='dark'>
             <thead>
                 <tr>
-                    <th className= 'Sort' onClick={props.sort}>First Name</th>
-                    <th className= 'Sort' onClick= {props.sort}>Last Name</th>
-                    <th className= 'Sort' onClick={props.sort}>Email</th>
-                    <th className= 'Sort' onClick={props.sort}>Username</th>
-                    <th className= 'Sort' onClick={props.sort}>city</th>
-                    <th className= 'Sort' onClick={props.sort}>State</th>
+                    <th className="first" onClick={props.sort} >First Name</th>
+                    <th className= 'last' onClick= {props.sort}>Last Name</th>
+                    <th className= 'email' onClick={props.sort}>Email</th>
+                    <th className= 'username' onClick={props.sort}>Username</th>
+                    <th className= 'city' onClick={props.sort}>city</th>
+                    <th className= 'state' onClick={props.sort}>State</th>
                     <th >Phone</th>
                 </tr>
             </thead>
