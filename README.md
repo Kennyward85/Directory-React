@@ -23,5 +23,12 @@ The user should be able to:
   * Sort the table by at least one category
 
   * Filter the users by at least one property.
+  
+  # Links
+  
+ https://kennyward85.github.io/Directory-React/
+ 
+ https://github.com/Kennyward85/Directory-React/tree/master
 
+# Deployed
 
