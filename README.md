@@ -31,4 +31,4 @@ The user should be able to:
  https://github.com/Kennyward85/Directory-React/tree/master
 
 # Deployed
-
+![Directory](https://user-images.githubusercontent.com/66036794/90950236-533a5780-e415-11ea-8f1e-cb0f4d41dd8d.png)
