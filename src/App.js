@@ -9,7 +9,6 @@ import TableSet from "./components/Table/TableSet";
 class App extends React.Component {
   state = {
     users:[],
-    direction: "ascend",
     searchTerm: '',
   }
 
