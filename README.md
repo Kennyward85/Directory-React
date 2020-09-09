@@ -1,4 +1,5 @@
 # Employee Directory
+Used basic react.js with randomuser API to create this simple application which will be updated further with more features soon
 Implemented Search by first Name and last Name that takes place on submission 
 Also allowed for Alphabetizing all columns except for phone number. 
 
